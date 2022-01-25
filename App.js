@@ -6,6 +6,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './src/components/Home';
 import Details from './src/components/Details';
 
+console.disableYellowBox = true;
 
 const App = () => {
   const Stack=createNativeStackNavigator();

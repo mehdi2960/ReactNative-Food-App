@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, ScrollView, StatusBar,Image,TouchableOpacity, TextInput ,FlatList} from 'react-native';
 import React, { useState } from 'react';
+import { View, Text, ScrollView, StatusBar,Image,TouchableOpacity, TextInput ,FlatList} from 'react-native';
 import {Categories, COLOURS } from '../database/items';
 import Material from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -49,6 +49,33 @@ const Home = () => {
                             color:currentSelected==index?COLOURS.black:COLOURS.white,
                             }}
                         />
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+    const renderItems=(data,index)=>{
+        return(
+            <TouchableOpacity style={{width:"100%",height:180,justifyContent:"center",alignItems:"center"}}>
+                <View style={{
+                    width:"90%",
+                    height:160,
+                    elevation:4,
+                    borderRadius:20,
+                    backgroundColor:"#FFF",
+                    flexDirection:"row",
+                    justifyContent:"space-between",
+                    position:"relative",
+                    padding:15
+                    }}>
+                    <View style={{
+                        marginBottom:50,
+                        backgroundColor:"red",
+                        }}>
+                        <View>
+                            <FontAwesome name="crown" style={{fontSize:10}}/>
+                        </View>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -104,7 +131,12 @@ const Home = () => {
                  renderItem={renderCategories}
                 showsHorizontalScrollIndicator={false}
                />
-               
+               <Text style={{paddingTop:20,paddingHorizontal:25,fontSize:18,fontWeight:"700",color:"#000"}}>
+                   Popular
+               </Text>
+               {
+                   Categories[currentSelected].items.map(renderItems)
+               }
            </View>
        </ScrollView>
     </View>
