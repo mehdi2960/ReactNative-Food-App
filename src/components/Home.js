@@ -5,8 +5,10 @@ import {Categories, COLOURS } from '../database/items';
 import Material from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const Home = () => {
+const Home = ({navigation}) => {
     const[currentSelected,setCurrentSelected]=useState([0]);
 
     const renderCategories=({item,index})=>{
@@ -57,7 +59,21 @@ const Home = () => {
 
     const renderItems=(data,index)=>{
         return(
-            <TouchableOpacity style={{width:"100%",height:180,justifyContent:"center",alignItems:"center"}}>
+            <TouchableOpacity 
+            onPress={()=>navigation.push('Details',{
+                name: data.name,
+                price: data.price,
+                image: data.image,
+                size: data.size,
+                crust: data.crust,
+                delivery: data.delivery,
+                ingredients: data.ingredients,
+                isTopOfTheWeek: data.isTopOfTheWeek,
+                navigation: navigation,
+            })}
+                key={index}
+                activeOpacity={0.9}
+                style={{width:"100%",height:180,justifyContent:"center",alignItems:"center"}}>
                 <View style={{
                     width:"90%",
                     height:160,
@@ -71,10 +87,46 @@ const Home = () => {
                     }}>
                     <View style={{
                         marginBottom:50,
-                        backgroundColor:"red",
                         }}>
-                        <View>
-                            <FontAwesome name="crown" style={{fontSize:10}}/>
+                        <View style={{
+                            flexDirection:"row",
+                            alignItems:"center",
+                            display:data.isTopOfTheWeek?"flex":"none",
+                            }}>
+                            <FontAwesome name="crown" style={{fontSize:10,color:COLOURS.accent}}/>
+                            <Text style={{fontSize:12,marginLeft:5,opacity:0.8,color:"#000"}}>
+                                top of the week
+                            </Text>
+                        </View>
+                        <Text style={{color:"#000",fontSize:22,fontWeight:"bold",paddingTop:10,}}>
+                            {data.name}
+                        </Text>
+                        <Text style={{color:"#000",fontSize:12,paddingTop:10,opacity:0.5}}>
+                            {data.weight}
+                        </Text>
+                    </View>
+                    <View style={{marginRight:-45,width:150,height:140}}>
+                        <Image
+                         source={data.image}
+                         style={{width:"100%",height:"100%",resizeMode:"contain"}}
+                        />
+                    </View>
+                    <View style={{flexDirection:"row",position:"absolute",bottom:0,}}>
+                        <View style={{width:85,height:50,backgroundColor:COLOURS.accent,justifyContent:"center",alignItems:"center",borderBottomLeftRadius:20,borderTopRightRadius:20,}}>
+                            <Entypo
+                             name="plus"
+                             style={{fontSize:18,color:"#000"}}
+                            />
+                        </View>
+                        <View style={{flexDirection:"row",alignItems:"center",padding:10,marginLeft:10}}>
+                           <AntDesign
+                            name="star"
+                            style={{paddingRight:5,fontSize:12,color:"#000"}}
+                            
+                            />
+                            <Text style={{fontWeight:"bold",fontSize:15,color:"#000"}}>
+                                {data.rating}
+                            </Text>
                         </View>
                     </View>
                 </View>
@@ -84,7 +136,7 @@ const Home = () => {
 
   return (
     <View style={{width:"100%",height:"100%",backgroundColor:COLOURS.white}}>
-       <ScrollView>
+       <ScrollView showsVerticalScrollIndicator={false}>
            <View style={{width:"100%",height:"100%",backgroundColor:COLOURS.white,position:"relative"}}>
              <StatusBar backgroundColor={COLOURS.white} barStyle='dark-content'/>
                <View style={{padding:15,flexDirection:"row",justifyContent:"space-between",width:"100%",alignItems:"center"}}>
@@ -137,6 +189,13 @@ const Home = () => {
                {
                    Categories[currentSelected].items.map(renderItems)
                }
+               <View style={{margin:30,alignItems:"center",padding:5,justifyContent:"center"}}>
+                   <TouchableOpacity style={{opacity:0.5}}>
+                       <Text style={{fontSize:16,borderBottomWidth:1,borderBottomColor:"#000"}}>
+                           Load more
+                       </Text>
+                   </TouchableOpacity>
+               </View>
            </View>
        </ScrollView>
     </View>
