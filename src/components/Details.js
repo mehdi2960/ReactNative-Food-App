@@ -4,6 +4,7 @@ import { View, Text,TouchableOpacity,Image, ScrollView } from 'react-native';
 import {COLOURS} from '../database/items';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const Details = ({route,navigation}) => {
   const {name,price,image,size,crust,delivery,ingredients,isTopOfTheWeek}=route.params
@@ -84,7 +85,7 @@ const Details = ({route,navigation}) => {
           <Text style={{fontSize:20,fontWeight:"700",color:"#000"}}>
             Ingredients
           </Text>
-          <ScrollView horizontal={true}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
              {
                ingredients.map((data, index)=>{
                  return(
@@ -97,6 +98,15 @@ const Details = ({route,navigation}) => {
                })
              }
           </ScrollView>
+        </View>
+        <View style={{position:"absolute",bottom:-8,alignItems:"center",justifyContent:"center",width:"100%"}}>
+          <TouchableOpacity
+          onPress={()=>navigation.goBack()}
+           activeOpacity={0.9}
+          style={{height:80,flexDirection:"row",borderRadius:20,alignItems:"center",justifyContent:"center",backgroundColor:COLOURS.accent,width:"90%"}}>
+            <Text style={{fontSize:20,fontWeight:"bold",letterSpacing:1}}>Place on Order</Text>
+            <Entypo name="chevron-right" style={{marginLeft:10,fontSize:16,}}/>
+          </TouchableOpacity>
         </View>
     </View>
   );
